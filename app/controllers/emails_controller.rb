@@ -1,5 +1,6 @@
 class EmailsController < ApplicationController
   before_filter :authenticate, :only => [:index,:edit,:update,:destroy]
+  respond_to :html, :json
   
   def index
     @emails = current_user.emails
@@ -30,7 +31,8 @@ class EmailsController < ApplicationController
     @email = Email.find(params[:id])
     if @email.update_attributes(params[:email])
       flash[:notice] = "Successfully updated"
-      redirect_to @email
+       respond_with @user
+      #redirect_to @email
     else
       render :action => 'edit'
     end
@@ -40,6 +42,13 @@ class EmailsController < ApplicationController
     @email = Email.find(params[:id])
     @email.destroy
     redirect_to @email
+  end
+
+    def  toggled_status
+    @email = Email.find(params[:id])
+    @email.is_published = !@email.is_published?
+    @email.save!
+    redirect_to emails_path
   end
 
    private
