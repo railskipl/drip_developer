@@ -24,13 +24,18 @@ class User < ActiveRecord::Base
   	password_hash == encrypt(submitted_password) 
   end
 
-  class << self
-  	def authenticate(email,submitted_password)
-  		user = find_by_email(email)
-  		return nil if user.nil?
-  		return user if user.has_password?(submitted_password)  	
-  	end
-  end
+   class << self
+	   def authenticate(email,submitted_password)
+	    	user = find_by_email(email)
+	    	(user && user.has_password?(submitted_password)) ? user: nil
+	   end
+   
+	   def authenticate_with_salt(id,cookie_salt)
+	   	  	user = find_by_id(id)
+	    	(user && user.password_salt == cookie_salt) ? user : nil
+	   end
+   
+   end
 
   private 
 
