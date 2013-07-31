@@ -1,0 +1,20 @@
+<table  cellspacing=0 cellpadding= 8>
+<tr>
+	<td align="right">Send From :</td>
+	<td> <%= @email.from_email %></td>
+</tr>
+<tr>
+	<td align="right">Send to :</td>
+	<td> <%= @email.to_email %></td>
+</tr>
+<tr>
+	<td align="right">Subject :</td>
+	<td> <%= @email.subject %></td>
+</tr>
+<tr>
+	<td align="right">Body :</td>
+	<td> <%= @email.text_body %></td>
+</tr>
+</table>
+<br />
+<%= link_to "Edit" ,edit_email_path %> | <%= link_to "Back" ,emails_path %> 
