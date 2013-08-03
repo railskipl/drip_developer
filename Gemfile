@@ -8,6 +8,7 @@ gem 'rails', '3.2.13'
 gem 'sqlite3'
 gem 'execjs'
 gem 'therubyracer'
+gem 'strong_parameters'
 
 group :development do
 	gem 'rspec-rails'
@@ -15,6 +16,8 @@ end
 
 group :test do
 	gem 'rspec-rails'
+	gem "bcrypt-ruby", :require => "bcrypt"
+	gem 'shoulda-matchers'
 end
 
 

@@ -1,3 +1,4 @@
+
 SampleProject::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -13,6 +14,8 @@ SampleProject::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
+  # Raises an error on unpermitted attributes assignment
+  config.action_controller.action_on_unpermitted_parameters = :raise
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
 
@@ -34,4 +37,7 @@ SampleProject::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  
+  
+  
 end

@@ -1,9 +1,11 @@
 class User < ActiveRecord::Base
+  ActiveRecord::Base.send(:include, ActiveModel::ForbiddenAttributesProtection)
   has_many :emails
 
   attr_accessor :password
 
-  attr_accessible :name,:email,:password, :password_confirmation
+  #attr_accessible :name,:email,:password, :password_confirmation
+  #attr_accessible Replaced by Strong Parameters 
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
@@ -19,12 +21,12 @@ class User < ActiveRecord::Base
                       :length => {:within => 6..40}
 
   before_save :encrypt_password
-
+ 
   def has_password?(submitted_password)
   	password_hash == encrypt(submitted_password) 
   end
 
-   class << self
+class << self
 	   def authenticate(email,submitted_password)
 	    	user = find_by_email(email)
 	    	(user && user.has_password?(submitted_password)) ? user: nil
@@ -55,5 +57,6 @@ class User < ActiveRecord::Base
 	  def secure_hash(string)
 	  	Digest::SHA2.hexdigest(string)
 	  end
+
 
 end

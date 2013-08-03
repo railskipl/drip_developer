@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   end
   
   def create
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
     if @user.save
       sign_in @user
       redirect_to @user, :flash => {:success => "Welcome #{@user.name}"}
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
    
    def update
       @user = User.find(params[:id])
-     if @user.update_attributes(params[:user])
+     if @user.update_attributes(user_params)
       
        redirect_to @user, :flash => {:success => "Profile updated."}
      else
@@ -56,5 +56,10 @@ class UsersController < ApplicationController
      @user = User.find(params[:id])
      redirect_to root_path,  alert: 'Unauthorised access to you' unless current_user?(@user)
    end
+   
+    #attr_accessible Replaced by Strong Parameters 	  
+    	  def user_params
+            params.require(:user).permit(:name, :email, :password, :password_confirmation)
+        end
    
 end
